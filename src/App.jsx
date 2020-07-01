@@ -6,6 +6,7 @@ import Contact from "./components/Contact";
 import Home from "./components/Home";
 import AboutUs from "./AboutUs";
 import ButtonBlackLink from "./ButtonBlackLink";
+import User from "./components/User";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         <ButtonBlackLink to="/contacto">Contacto</ButtonBlackLink>
         <hr className="my-6" />
         <Switch>
+          <Route path="/nosotros/:id">
+            <User></User>
+          </Route>
           <Route path="/contacto">
             <Contact />
           </Route>
