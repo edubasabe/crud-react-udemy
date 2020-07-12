@@ -1,6 +1,6 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from "react";
 import { firebase } from "./firebase";
-import shortid from "shortid";
 import "./App.css";
 import "tailwindcss/dist/tailwind.min.css";
 
@@ -26,25 +26,41 @@ function App() {
     getTasks();
   }, []);
 
-  const addTask = (e) => {
+  const addTask = async (e) => {
     e.preventDefault();
     if (!task.trim()) {
       setError("Escriba algo por favor...");
       return;
     }
 
-    setTasks([...tasks, { id: shortid.generate(), name: task }]);
-    setTask("");
+    try {
+      const db = firebase.firestore();
+      const newTask = {
+        name: task,
+        fecha: Date.now(),
+      };
+      const { id } = await db.collection("tareas").add(newTask);
+      setTasks([...tasks, { ...newTask, id }]);
+      setTask("");
+    } catch (error) {
+      console.log("addTask -> error", error);
+    }
+
     focusTaskInput();
     setError(null);
   };
 
-  const handleDeleteTask = (id, name) => {
-    // eslint-disable-next-line no-restricted-globals
+  const handleDeleteTask = async (id, name) => {
     const confirmation = confirm(`¿Estás seguro que quieres borrar ${name}?`);
     if (confirmation) {
-      const filteredTasks = tasks.filter((task) => task.id !== id);
-      setTasks(filteredTasks);
+      try {
+        const db = firebase.firestore();
+        await db.collection("tareas").doc(id).delete();
+        const filteredTasks = tasks.filter((task) => task.id !== id);
+        setTasks(filteredTasks);
+      } catch (error) {
+        console.log("handleDeleteTask -> error", error);
+      }
     }
   };
 
