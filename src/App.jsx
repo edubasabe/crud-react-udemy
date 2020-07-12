@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { firebase } from "./firebase";
 import shortid from "shortid";
 import "./App.css";
 import "tailwindcss/dist/tailwind.min.css";
@@ -9,6 +10,21 @@ function App() {
   const [id, setId] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getTasks = async () => {
+      try {
+        const db = firebase.firestore();
+        const { docs } = await db.collection("tareas").get();
+        const tasksArray = docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setTasks(tasksArray);
+      } catch (error) {
+        console.error("getTasks -> error", error);
+      }
+    };
+
+    getTasks();
+  }, []);
 
   const addTask = (e) => {
     e.preventDefault();
