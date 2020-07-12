@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { firebase } from "./firebase";
 import "./App.css";
 import "tailwindcss/dist/tailwind.min.css";
+import Task from "./components/Task/Task";
 
 function App() {
   const [task, setTask] = useState("");
@@ -42,12 +43,11 @@ function App() {
       const { id } = await db.collection("tareas").add(newTask);
       setTasks([...tasks, { ...newTask, id }]);
       setTask("");
+      focusTaskInput();
+      setError(null);
     } catch (error) {
       console.log("addTask -> error", error);
     }
-
-    focusTaskInput();
-    setError(null);
   };
 
   const handleDeleteTask = async (id, name) => {
@@ -71,27 +71,36 @@ function App() {
     focusTaskInput();
   };
 
-  const handleEditTask = (e) => {
+  const handleEditTask = async (e) => {
     e.preventDefault();
     if (!task.trim()) {
       setError("Escriba algo por favor...");
       return;
     }
 
-    const tasksEdited = tasks.map((taskItem) => {
-      return taskItem.id === id
-        ? {
-            id,
-            name: task,
-          }
-        : taskItem;
-    });
+    try {
+      const db = firebase.firestore();
+      await db.collection("tareas").doc(id).update({
+        name: task,
+      });
 
-    setTasks(tasksEdited);
-    setEditMode(false);
-    setTask("");
-    setId("");
-    setError(null);
+      const tasksEdited = tasks.map((taskItem) => {
+        return taskItem.id === id
+          ? {
+              id,
+              name: task,
+            }
+          : taskItem;
+      });
+
+      setTasks(tasksEdited);
+      setEditMode(false);
+      setTask("");
+      setId("");
+      setError(null);
+    } catch (error) {
+      console.log("handleEditTask -> error", error);
+    }
   };
 
   const focusTaskInput = () => {
@@ -111,24 +120,13 @@ function App() {
               ) : (
                 tasks.map(({ id, name }) => {
                   return (
-                    <li
+                    <Task
+                      id={id}
                       key={id}
-                      className="border rounded flex py-5 px-8 mb-3 shadow hover:shadow-lg transition-shadow duration-200"
-                    >
-                      <p className="mr-auto">{name}</p>
-                      <button
-                        className="py-1 px-2 bg-yellow-300 rounded text-yellow-700 text-sm mr-2"
-                        onClick={() => handleEdit(id, name)}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="py-1 px-2 bg-red-300 rounded text-red-700 text-sm"
-                        onClick={() => handleDeleteTask(id, name)}
-                      >
-                        Eliminar
-                      </button>
-                    </li>
+                      name={name}
+                      edit={() => handleEdit(id, name)}
+                      remove={() => handleDeleteTask(id, name)}
+                    />
                   );
                 })
               )}
@@ -155,14 +153,14 @@ function App() {
               {editMode ? (
                 <button
                   type="submit"
-                  className="py-2 px-2 bg-orange-500 rounded block w-full text-white"
+                  className="py-2 px-2 bg-orange-500 rounded block w-full text-white font-bold"
                 >
                   Editar tarea
                 </button>
               ) : (
                 <button
                   type="submit"
-                  className="py-2 px-2 bg-teal-500 rounded block w-full text-white"
+                  className="py-2 px-2 bg-teal-500 rounded block w-full text-white font-bold"
                 >
                   Agregar tarea
                 </button>
