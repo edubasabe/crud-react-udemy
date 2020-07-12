@@ -11,7 +11,7 @@ const Button = (props) => {
       classes = "bg-yellow-400 text-gray-900";
       break;
     default:
-      classes = "bg-white text-black";
+      classes = "py-2 px-2";
       break;
   }
   return (

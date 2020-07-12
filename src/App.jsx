@@ -4,6 +4,8 @@ import { firebase } from "./firebase";
 import "./App.css";
 import "tailwindcss/dist/tailwind.min.css";
 import Task from "./components/Task/Task";
+import Input from "./components/UI/Input/Input";
+import Button from "./components/UI/Button/Button";
 
 function App() {
   const [task, setTask] = useState("");
@@ -137,8 +139,7 @@ function App() {
               {editMode ? "Editar tarea" : "Agregar tarea"}
             </h2>
             <form onSubmit={editMode ? handleEditTask : addTask}>
-              <input
-                className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal mb-2"
+              <Input
                 type="text"
                 placeholder="Ingresa una tarea"
                 onChange={(e) => setTask(e.target.value)}
@@ -151,19 +152,16 @@ function App() {
               ) : null}
 
               {editMode ? (
-                <button
-                  type="submit"
-                  className="py-2 px-2 bg-orange-500 rounded block w-full text-white font-bold"
-                >
+                <Button type="submit" className="bg-orange-500 block w-full">
                   Editar tarea
-                </button>
+                </Button>
               ) : (
-                <button
+                <Button
                   type="submit"
-                  className="py-2 px-2 bg-teal-500 rounded block w-full text-white font-bold"
+                  className="bg-teal-500 rounded block w-full text-white"
                 >
                   Agregar tarea
-                </button>
+                </Button>
               )}
             </form>
           </div>
