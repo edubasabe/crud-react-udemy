@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import Task from "../Task/Task";
 const Tasks = (props) => {
   return (
-    <ul>
+    <ul id="tasks-list">
       {props.tasks.length === 0 ? (
-        <li>No hay tareas</li>
+        <li id="empty-list">No hay tareas</li>
       ) : (
         props.tasks.map(({ id, name }) => {
           return (

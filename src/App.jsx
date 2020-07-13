@@ -111,7 +111,9 @@ function App() {
   return (
     <div className="App">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-bold border-b my-5">CRUD React</h1>
+        <h1 className="text-4xl font-bold border-b my-5" id="main-title">
+          CRUD React
+        </h1>
         <div className="max-w-full flex">
           <div className="md:w-3/4 pr-2">
             <h2 className="text-2xl font-semibold">Lista de tareas</h2>
