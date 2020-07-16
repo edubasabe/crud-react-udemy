@@ -13,12 +13,12 @@ const Navbar = (props) => {
         </div>
         <nav className="flex">
           <ul className="flex items-center text-gray-300">
-            <li className="mr-4">
+            <li className="mr-4 lg:mr-8">
               <NavLink to="/" exact className="font-semibold hover:text-white">
                 Inicio
               </NavLink>
             </li>
-            <li className="mr-4">
+            <li className="mr-4 lg:mr-8">
               <NavLink to="/admin" className="font-semibold hover:text-white">
                 Admin
               </NavLink>

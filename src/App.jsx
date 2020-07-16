@@ -15,7 +15,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <Switch>
           <Route path="/" exact>
             Inicio
@@ -30,7 +30,6 @@ function App() {
           <Route path="/admin">admin</Route>
         </Switch>
       </div>
-      ;
     </Router>
   );
 }

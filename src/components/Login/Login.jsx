@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Error from "../UI/Error/Error";
+import { auth, db } from "../../firebase";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -13,11 +14,11 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email.trim()) {
-      setError("Ingrese email");
+      setError("Ingrese el email");
       return;
     }
     if (!password.trim()) {
-      setError("Ingrese password");
+      setError("Ingrese la contraseña");
       return;
     }
 
@@ -27,11 +28,40 @@ const Login = (props) => {
     }
 
     setError(null);
+
+    if (isRegister) handleRegister();
+    else handleLogin();
+  };
+
+  const handleRegister = useCallback(async () => {
+    try {
+      const {
+        user: { email: createdEmail, uid },
+      } = await auth.createUserWithEmailAndPassword(email, password);
+      db.collection("users").doc(createdEmail).set({
+        email: createdEmail,
+        uid,
+      });
+      clearState();
+    } catch (error) {
+      console.error("handleRegister -> error", error);
+      setError(error.message);
+    }
+  }, [email, password]);
+
+  const handleLogin = () => {
+    console.log("Login");
+  };
+
+  const clearState = () => {
+    setEmail("");
+    setPassword("");
+    setError(null);
   };
 
   return (
     <div className="mt-5">
-      <h3 className="text-center text-2xl mb-1">
+      <h3 className="text-center text-3xl mb-1 font-semibold">
         {isRegister ? "Registro de usuario" : "Iniciar sesión"}
       </h3>
       <div className="flex justify-center">
