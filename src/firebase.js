@@ -1,5 +1,7 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore'
+import app from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "crud-react-b797d.firebaseapp.com",
@@ -11,6 +13,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-export { firebase };
+app.initializeApp(firebaseConfig);
+const db = app.firestore();
+const auth = app.auth();
+export { db, auth };

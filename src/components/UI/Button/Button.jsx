@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Button = (props) => {
-  let classes = "";
+  let classes = null;
   switch (props.type) {
     case "danger":
-      classes = "bg-red-600 text-white";
+      classes = "text-sm bg-red-600 text-white";
       break;
     case "warning":
-      classes = "bg-yellow-400 text-gray-900";
+      classes = "text-sm bg-yellow-400 text-gray-900";
       break;
     default:
       classes = "py-2 px-2";
@@ -17,7 +17,9 @@ const Button = (props) => {
   return (
     <button
       {...props}
-      className={`py-1 px-2 rounded text-sm font-bold ${classes} ${props.className}`}
+      className={`rounded font-bold ${classes && classes} ${
+        props.className ? props.className : ""
+      }`}
     >
       {props.children}
     </button>
