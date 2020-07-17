@@ -1,17 +1,18 @@
 import React, { useState, useCallback } from "react";
-import Input from "../UI/Input/Input";
-import Button from "../UI/Button/Button";
-import Error from "../UI/Error/Error";
+import Input from "../../components/UI/Input/Input";
+import Button from "../../components/UI/Button/Button";
+import Error from "../../components/UI/Error/Error";
 import { auth, db } from "../../firebase";
-import Loader from "../UI/Loader/Loader";
+import Loader from "../../components/UI/Loader/Loader";
 import { withRouter } from "react-router-dom";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [isRegister, setIsRegister] = useState(true);
+  const [isRegister, setIsRegister] = useState(false);
   const [Loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,6 +76,10 @@ const Login = (props) => {
     setError(null);
   };
 
+  const handleRememberMe = () => {
+    setRememberMe(!rememberMe);
+  };
+
   return (
     <>
       <Loader loading={Loading} />
@@ -102,6 +107,25 @@ const Login = (props) => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
+              {!isRegister && (
+                <>
+                  <label
+                    htmlFor="remember-me"
+                    className="flex items-center mb-2"
+                  >
+                    <input
+                      type="checkbox"
+                      name="remember-me"
+                      id="remember-me"
+                      className="form-checkbox mr-2"
+                      onChange={() => handleRememberMe()}
+                      checked={rememberMe}
+                    />
+
+                    <span className="text-sm">Recuérdame</span>
+                  </label>
+                </>
+              )}
               <Button
                 type="submit"
                 className="bg-blue-600 text-gray-200 hover:bg-blue-600 hover:text-white py-3 px-4 w-full"

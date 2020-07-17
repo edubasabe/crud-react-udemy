@@ -1,10 +1,8 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.css";
-import "tailwindcss/dist/tailwind.min.css";
 import Navbar from "./components/Navbar/Navbar";
-import Login from "./components/Login/Login";
+import Login from "./containers/Login/Login";
 import Admin from "./containers/Admin/Admin";
 import { auth } from "./firebase";
 
