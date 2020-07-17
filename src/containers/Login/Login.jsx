@@ -1,0 +1,130 @@
+import React, { useState, useCallback } from "react";
+import Input from "../UI/Input/Input";
+import Button from "../UI/Button/Button";
+import Error from "../UI/Error/Error";
+import { auth, db } from "../../firebase";
+import Loader from "../UI/Loader/Loader";
+import { withRouter } from "react-router-dom";
+
+const Login = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [isRegister, setIsRegister] = useState(true);
+  const [Loading, setLoading] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email.trim()) {
+      setError("Ingrese el email");
+      return;
+    }
+    if (!password.trim()) {
+      setError("Ingrese la contraseña");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("La contraseña debe ser mayor a 6 caracteres");
+      return;
+    }
+
+    setError(null);
+
+    if (isRegister) handleRegister();
+    else handleLogin();
+  };
+
+  const handleRegister = useCallback(async () => {
+    setLoading(true);
+    try {
+      const {
+        user: { email: createdEmail, uid },
+      } = await auth.createUserWithEmailAndPassword(email, password);
+      db.collection("users").doc(createdEmail).set({
+        email: createdEmail,
+        uid,
+      });
+      clearState();
+    } catch (error) {
+      console.error("handleRegister -> error", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [email, password, setLoading]);
+
+  const handleLogin = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await auth.signInWithEmailAndPassword(email, password);
+      console.log("handleLogin -> response", response);
+      clearState();
+      props.history.push("/admin");
+    } catch (error) {
+      console.log("handleLogin -> error", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [email, password, setLoading, props.history]);
+
+  const clearState = () => {
+    setEmail("");
+    setPassword("");
+    setError(null);
+  };
+
+  return (
+    <>
+      <Loader loading={Loading} />
+      <div className="mt-5">
+        <h3 className="text-center text-3xl mb-1 font-semibold">
+          {isRegister ? "Registro de usuario" : "Iniciar sesión"}
+        </h3>
+        <div className="flex justify-center">
+          <div className="max-w-sm w-full mt-5">
+            <form onSubmit={handleSubmit}>
+              {error && (
+                <div className="bg-red-100 py-2 px-4 mb-2 rounded border border-red-500">
+                  <Error>{error}</Error>
+                </div>
+              )}
+              <Input
+                type="email"
+                placeholder="Ingresa un email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+              <Input
+                type="password"
+                placeholder="Ingresa una contraseña"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+              <Button
+                type="submit"
+                className="bg-blue-600 text-gray-200 hover:bg-blue-600 hover:text-white py-3 px-4 w-full"
+              >
+                {isRegister ? "Crear cuenta" : "Iniciar sesión"}
+              </Button>
+              <button
+                type="button"
+                onClick={() => setIsRegister(!isRegister)}
+                className="text-blue-500 hover:text-blue-400 hover:underline text-center block py-2 w-full focus:outline-none"
+              >
+                {isRegister
+                  ? "¿Ya tienes cuenta? Inicia sesión"
+                  : "¿No tienes cuenta? Regístrate"}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+Login.propTypes = {};
+
+export default withRouter(Login);

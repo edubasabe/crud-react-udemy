@@ -1,20 +1,25 @@
 /* eslint-disable no-restricted-globals */
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Switch,
-} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import "tailwindcss/dist/tailwind.min.css";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login/Login";
+import Admin from "./containers/Admin/Admin";
+import { auth } from "./firebase";
 
 function App() {
-  return (
+  const [firebaseUser, setFirebaseUser] = useState(false);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log("App -> user", user);
+      if (user) setFirebaseUser(user);
+      else setFirebaseUser(null);
+    });
+  }, []);
+  return firebaseUser !== false ? (
     <Router>
-      <Navbar />
+      <Navbar firebaseUser={firebaseUser} />
       <div className="container mx-auto px-4">
         <Switch>
           <Route path="/" exact>
@@ -27,10 +32,14 @@ function App() {
           </Route>
         </Switch>
         <Switch>
-          <Route path="/admin">admin</Route>
+          <Route path="/admin">
+            <Admin />
+          </Route>
         </Switch>
       </div>
     </Router>
+  ) : (
+    <p>Cargando...</p>
   );
 }
 
