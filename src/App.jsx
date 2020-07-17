@@ -10,7 +10,6 @@ function App() {
   const [firebaseUser, setFirebaseUser] = useState(false);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      console.log("App -> user", user);
       if (user) setFirebaseUser(user);
       else setFirebaseUser(null);
     });

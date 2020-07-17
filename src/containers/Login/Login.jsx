@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import Error from "../../components/UI/Error/Error";
@@ -13,6 +13,15 @@ const Login = (props) => {
   const [isRegister, setIsRegister] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem("userData")) {
+      const userData = JSON.parse(sessionStorage.getItem("userData"));
+      const { email: sessionEmail, password: sessionPassword } = userData;
+      setEmail(sessionEmail);
+      setPassword(sessionPassword);
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,10 +65,13 @@ const Login = (props) => {
   }, [email, password, setLoading]);
 
   const handleLogin = useCallback(async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const response = await auth.signInWithEmailAndPassword(email, password);
       console.log("handleLogin -> response", response);
+      if (rememberMe) {
+        sessionStorage.setItem("userData", JSON.stringify({ email, password }));
+      }
       clearState();
       props.history.push("/admin");
     } catch (error) {
@@ -68,18 +80,13 @@ const Login = (props) => {
     } finally {
       setLoading(false);
     }
-  }, [email, password, setLoading, props.history]);
+  }, [email, password, setLoading, props.history, rememberMe]);
 
   const clearState = () => {
     setEmail("");
     setPassword("");
     setError(null);
   };
-
-  const handleRememberMe = () => {
-    setRememberMe(!rememberMe);
-  };
-
   return (
     <>
       <Loader loading={Loading} />
@@ -118,7 +125,7 @@ const Login = (props) => {
                       name="remember-me"
                       id="remember-me"
                       className="form-checkbox mr-2"
-                      onChange={() => handleRememberMe()}
+                      onChange={() => setRememberMe(!rememberMe)}
                       checked={rememberMe}
                     />
 
