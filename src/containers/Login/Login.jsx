@@ -107,12 +107,14 @@ const Login = (props) => {
                 placeholder="Ingresa un email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                className="mb-2"
               />
               <Input
                 type="password"
                 placeholder="Ingresa una contraseña"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                className="mb-2"
               />
               {!isRegister && (
                 <>

@@ -14572,6 +14572,10 @@ code {
 
 /* My Custom CSS Here */
 
+.active {
+  color: #3182ce;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;

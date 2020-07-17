@@ -17,3 +17,7 @@ code {
 }
 
 /* My Custom CSS Here */
+
+.active {
+  color: #3182ce;
+}
