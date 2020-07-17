@@ -95,7 +95,7 @@ const Login = (props) => {
           {isRegister ? "Registro de usuario" : "Iniciar sesión"}
         </h3>
         <div className="flex justify-center">
-          <div className="max-w-sm w-full mt-5">
+          <div className="max-w-sm w-full mt-5 px-4">
             <form onSubmit={handleSubmit}>
               {error && (
                 <div className="bg-red-100 py-2 px-4 mb-2 rounded border border-red-500">
