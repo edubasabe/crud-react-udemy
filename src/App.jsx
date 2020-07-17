@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Login from "./containers/Login/Login";
 import Admin from "./containers/Admin/Admin";
 import { auth } from "./firebase";
+import MyTasks from "./containers/MyTasks/MyTasks";
 
 function App() {
   const [firebaseUser, setFirebaseUser] = useState(false);
@@ -31,6 +32,11 @@ function App() {
         <Switch>
           <Route path="/admin">
             <Admin />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/my-tasks">
+            <MyTasks />
           </Route>
         </Switch>
       </div>

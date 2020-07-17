@@ -17,7 +17,7 @@ const Admin = (props) => {
 
   return (
     <div>
-      <h3 className="font-semibold text-2xl">Admin Protected Page</h3>
+      <h3 className="font-semibold text-2xl">Mis Tareas</h3>
       <hr />
       {user && <h3 className="text-2xl font-semibold">{user.email}</h3>}
     </div>

@@ -27,11 +27,25 @@ const Navbar = (props) => {
             </li>
 
             {props.firebaseUser !== null ? (
-              <li className="mr-3 lg:mr-8">
-                <NavLink to="/admin" className="font-semibold hover:text-white">
-                  Admin
-                </NavLink>
-              </li>
+              <>
+                <li className="mr-3 lg:mr-8">
+                  <NavLink
+                    to="/admin"
+                    className="font-semibold hover:text-white"
+                  >
+                    Admin
+                  </NavLink>
+                </li>
+
+                <li className="mr-3 lg:mr-8">
+                  <NavLink
+                    to="/my-tasks"
+                    className="font-semibold hover:text-white"
+                  >
+                    Mis Tareas
+                  </NavLink>
+                </li>
+              </>
             ) : null}
 
             {props.firebaseUser !== null ? (

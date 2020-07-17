@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
-import Error from "./Error/Error";
+import Error from "../UI/Error/Error";
 const FormTask = (props) => {
   return (
     <form onSubmit={props.editMode ? props.edittask : props.addtask}>
