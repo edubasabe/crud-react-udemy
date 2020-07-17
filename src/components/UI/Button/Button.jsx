@@ -5,10 +5,10 @@ const Button = (props) => {
   let classes = null;
   switch (props.type) {
     case "danger":
-      classes = "text-sm bg-red-600 text-white";
+      classes = "py-1 px-2 text-sm bg-red-600 text-white";
       break;
     case "warning":
-      classes = "text-sm bg-yellow-400 text-gray-900";
+      classes = "py-1 px-2 text-sm bg-yellow-400 text-gray-900";
       break;
     default:
       classes = "py-2 px-2";

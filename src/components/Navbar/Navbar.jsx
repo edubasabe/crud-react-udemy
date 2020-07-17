@@ -50,7 +50,10 @@ const Navbar = (props) => {
 
             {props.firebaseUser !== null ? (
               <li>
-                <Button onClick={() => handleSignOut()} className="bg-red-700">
+                <Button
+                  onClick={() => handleSignOut()}
+                  className="bg-red-700 py-2 px-4"
+                >
                   Logout
                 </Button>
               </li>

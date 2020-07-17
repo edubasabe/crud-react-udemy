@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Input = (props) => {
   return (
     <>
-      <input className="form-input w-full mb-2" {...props} />
+      <input {...props} className={`form-input w-full ${props.className}`} />
     </>
   );
 };

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import Tasks from "../../components/Tasks/Tasks";
 import FormTask from "../../components/FormTask/FormTask";
+import { IoIosApps } from "react-icons/io";
+import PageHeading from "../../components/PageHeading/PageHeading";
 
 const MyTasks = () => {
   const [task, setTask] = useState("");
@@ -104,19 +106,15 @@ const MyTasks = () => {
 
   return (
     <div>
-      <div className="max-w-full flex">
-        <div className="md:w-3/4 pr-2">
-          <h2 className="text-2xl font-semibold">Lista de tareas</h2>
-          <Tasks
-            tasks={tasks}
-            taskedit={(id, name) => handleEdit(id, name)}
-            taskdelete={(id, name) => handleDeleteTask(id, name)}
-          />
-        </div>
-        <div className="pl-2 md:w-1/4">
-          <h2 className="text-2xl font-semibold">
+      <PageHeading>
+        <IoIosApps size="2em" className="mr-2" />
+        <h2 className="text-2xl font-semibold">Lista de tareas</h2>
+      </PageHeading>
+      <div className="max-w-5xl mx-auto flex flex-wrap">
+        <div className="w-full">
+          {/* <h2 className="text-sm">
             {editMode ? "Editar tarea" : "Agregar tarea"}
-          </h2>
+          </h2> */}
           <FormTask
             editMode={editMode}
             task={task}
@@ -124,6 +122,13 @@ const MyTasks = () => {
             addtask={(e) => addTask(e)}
             edittask={(e) => editTask(e)}
             settask={(e) => setTask(e.target.value)}
+          />
+        </div>
+        <div className="md:w-full pr-2">
+          <Tasks
+            tasks={tasks}
+            taskedit={(id, name) => handleEdit(id, name)}
+            taskdelete={(id, name) => handleDeleteTask(id, name)}
           />
         </div>
       </div>

@@ -5,29 +5,33 @@ import Button from "../UI/Button/Button";
 import Error from "../UI/Error/Error";
 const FormTask = (props) => {
   return (
-    <form onSubmit={props.editMode ? props.edittask : props.addtask}>
+    <form
+      onSubmit={props.editMode ? props.edittask : props.addtask}
+      className="flex flex-start mb-4"
+    >
       <Input
         type="text"
         placeholder="Ingresa una tarea"
         onChange={props.settask}
         value={props.task}
         name="task-name"
+        className="mr-2"
       />
 
-      {props.error && <Error>{props.error}</Error>}
-
       {props.editMode ? (
-        <Button type="submit" className="bg-orange-500 block w-full">
+        <Button type="submit" className="w-48 bg-orange-500 block">
           Editar tarea
         </Button>
       ) : (
         <Button
           type="submit"
-          className="bg-teal-500 rounded block w-full text-white"
+          className="w-48 bg-teal-500 rounded block text-white"
         >
           Agregar tarea
         </Button>
       )}
+
+      {props.error && <Error>{props.error}</Error>}
     </form>
   );
 };
