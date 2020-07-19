@@ -8,7 +8,7 @@ const Loader = (props) => {
         props.loading ? "visible opacity-75" : "invisible opacity-0"
       }`}
     >
-      <div className="dual-ring"></div>
+      <div className="dual-ring" />
     </div>
   );
 };

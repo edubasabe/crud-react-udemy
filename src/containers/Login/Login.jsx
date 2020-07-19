@@ -55,6 +55,12 @@ const Login = (props) => {
         email: createdEmail,
         uid,
       });
+
+      db.collection(uid).add({
+        name: "Tarea de ejemplo",
+        fecha: Date.now(),
+      });
+
       clearState();
     } catch (error) {
       console.error("handleRegister -> error", error);

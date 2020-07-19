@@ -24,7 +24,14 @@ const Admin = (props) => {
         <h2 className="text-2xl font-semibold">Admin</h2>
       </PageHeading>
       <div className="container px-4">
-        {user && <h3 className="text-2xl font-semibold">{user.email}</h3>}
+        {user && (
+          <div className="flex items-center py-3 px-3 rounded border shadow-md">
+            <div className="bg-gray-600 rounded-full flex justify-center items-center w-10 h-10 text-white mr-4">
+              {user.email.charAt(0).toUpperCase()}
+            </div>
+            <h3 className="text-lg">{user.email}</h3>
+          </div>
+        )}
       </div>
     </div>
   );

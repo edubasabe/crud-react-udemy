@@ -18,7 +18,7 @@ const Navbar = (props) => {
             AuthApp
           </Link>
         </div>
-        <nav className="hidden md:flex">
+        <nav className="hidden md:flex top-navbar">
           <ul className="flex items-center text-gray-300">
             <li className="mr-3 lg:mr-8">
               <NavLink to="/" exact className="font-semibold hover:text-white">
@@ -70,7 +70,7 @@ const Navbar = (props) => {
             )}
           </ul>
         </nav>
-        <nav className="flex fixed bottom-0 left-0 w-full bg-gray-100 border-t py-0">
+        <nav className="bottom-navbar flex fixed bottom-0 left-0 w-full bg-gray-100 border-t py-0 sm:hidden">
           <ul className="flex items-center text-gray-800 w-full justify-around">
             <li className="mr-3 lg:mr-8">
               <NavLink

@@ -42,7 +42,6 @@ const MyTasks = () => {
       const { id } = await db.collection("tareas").add(newTask);
       setTasks([...tasks, { ...newTask, id }]);
       setTask("");
-      focusTaskInput();
       setError(null);
     } catch (error) {
       console.log("addTask -> error", error);
@@ -66,7 +65,6 @@ const MyTasks = () => {
     setEditMode(true);
     setTask(name);
     setId(id);
-    focusTaskInput();
   };
 
   const editTask = async (e) => {
@@ -100,10 +98,6 @@ const MyTasks = () => {
     }
   };
 
-  const focusTaskInput = () => {
-    document.querySelector("[name='task-name']").focus();
-  };
-
   return (
     <div>
       <PageHeading>
@@ -124,7 +118,7 @@ const MyTasks = () => {
             settask={(e) => setTask(e.target.value)}
           />
         </div>
-        <div className="md:w-full pr-2">
+        <div className="w-full px-4">
           <Tasks
             tasks={tasks}
             taskedit={(id, name) => handleEdit(id, name)}
