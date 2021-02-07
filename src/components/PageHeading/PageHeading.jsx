@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 const PageHeading = (props) => {
   return (
     <div>
@@ -12,7 +10,5 @@ const PageHeading = (props) => {
     </div>
   );
 };
-
-PageHeading.propTypes = {};
 
 export default PageHeading;

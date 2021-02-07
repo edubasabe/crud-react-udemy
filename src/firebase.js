@@ -3,7 +3,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: "AIzaSyDHHBke4MHEAhYm-qW4Au05IZsKzypHJj4",
   authDomain: "crud-react-b797d.firebaseapp.com",
   databaseURL: "https://crud-react-b797d.firebaseio.com",
   projectId: "crud-react-b797d",
